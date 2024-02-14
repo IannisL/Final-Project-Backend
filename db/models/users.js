@@ -34,6 +34,10 @@ const usersSchema = new mongoose.Schema({
         type: String,
         enum: ["PokeRanger", "Lass", "Youngster", "PKMN Trainer", "Researcher","Biker","Artist","PokeBreeder","Couple","Explorer","Swimmer","Leader"]
     },
+    team: { type: String, required: true, min: 6 },
+    boxed: { type: Boolean, default: true},
+    createdAt: { type: Date, default: Date.now },
+    location: { type: String, enum: ["battle area", "Route 5", "Unknown", "Area1", "Vern Forest"]},
 }, {
     timestamps: true,
     toJSON: {
@@ -49,7 +53,7 @@ usersSchema.index({ email: 1 });
 usersSchema.index({ username: 1 });
 
 
-
+//Authentication
 usersSchema.pre('save', async function (next) {
     // if the password has not changed continue
     if (!this.isModified("password")) return next();
